@@ -58,3 +58,116 @@ Trong trường hợp bạn sử dụng biến mà biến đó không xét đế
 dynamic dyn = 123;             // Khởi tạo là số int
         dyn = "Dynamic";               // Gán chuỗi
         dyn = 1.12345;                 // Gán số double
+
+
+### Hằng số khai báo và sử dụng
+Hằng số lưu giá trị mà không thể thay đổi, sử dụng từ khóa const hoặc final để tạo ra hằng số.
+
+##### Tạo hằng số const
+ - const ten_hang_s0 = biểu_thức_giá_trị;
+
+ //Ví dụ
+ const dow_0     = 'Sunday';
+ const dow_1     = 'Monday';
+ const minutes   = 24 * 60;
+ 
+ Cách khai bao trên gọi là hằng số lúc biên dịch, giá trị của nó phải là cụ thể ngay lúc bạn viết code.
+
+##### Tạo hằng số final
+Thực ra đây giống như khai báo biến, nhưng biến final chỉ được gán một lần duy nhất, gán lần thứ 2 sẽ lỗi (trước khi sử dụng phải có 1 lần gán). Nó gọi là hằng số lúc chạy, giá trị hằng số này có thể khác nhau mỗi lần chạy
+
+- Cú pháp như sau:
+final name_1          = biểu_thức_giá_trị;
+final String name_2   = biểu_thức_giá_trị; //Chỉ rõ luôn kiểu của hằng
+var so_ngau_nhien = Random(1000).nextInt(500);
+
+//Tạo hằng số:  
+ final a = so_ngau_nhien * 2;
+
+Như ví dụ trên, tạo ra hàng số a. Hằng số này sau khi khởi tạo thì không thay đổi nữa. Vấn đề hằng số này được khởi tạo bằng một giá trị ngẫu nhiên sinh ra bởi hàm Random, vậy mỗi lần chạy ứng dụng hằng số này có thể có giá trị khác nhau. Nó khác với const là cố định ngay từ khi viết code (hằng số biên dịch).
+
+ - Ví dụ sau sẽ bị lỗi
+
+var so_ngau_nhien = Random(1000).nextInt(500);
+const a = so_ngau_nhien * 2;
+
+test.dart:7:13: Error: Not a constant expression.
+Lỗi vì bạn không thể biết a bằng bao nhiêu khi đọc code
+
+### Các kiểu dữ liệu trong Dart, phép toán cơ bản
+#### Dart đang hỗ trợ các nhóm kiểu dữ liệu: Số, Chuỗi, Logic, Mảng, symbol, Runes (chuỗi Unicode 32-bit)
+
+##### Kiểu	Mô tả
+- int	Biểu diễn các giá trị số nguyên
+  int numint = 100;
+  Đổi chữ thành số nguyên
+  int numint = int.parse("120");
+- double	Biểu diễn giá trị số thực 64bit
+  double d1 = 100; //100.0
+  double d2 = 0.1234;
+  var    d3 = 12.123;
+  Đổi chuỗi thành số thực
+  var abc = double.parse("123.123");
+- Cả số nguyên và số thực có các phép toán để tạo thành biểu thức là (cộng,trừ,nhân,chia)
+  + - * /
+  double c = (a + b) / (a-b);
+  Trên các đối tượng số này có các phương thức để chuyển đổi kiểu toString(), toInt(), toDouble()
+
+  double a = 10.10;
+  int    b = a.toInt();
+  String c = (a + b).toString();
+- string	Biểu diễn chuỗi ký tự Unicode(UTF-16). Nó được nhập vào trong cặp nháy đơn '' hoặc nháy kép "". Dùng ký hiệu \", \' để biểu diễn ký tự ', " trong chuỗi
+    String a = 'Chuỗi ký tự \'\' (nháy đơn)';  // Chuỗi ký tự '' (nháy đơn)
+    String b = "Chuỗi ký tự \"\" (nháy kép)";  // Chuỗi ký tự "" (nháy kép)
+    Để nối các chuỗi lại với nhau dùng toán tử +, kiểm tra hai chuỗi giống nhau không dùng ==
+    String s1 = "S1";
+    String s2 = "S2";
+    String s3 = s2 + '_' + s1;
+    print(s3); //S1_S2
+    Muốn nhập chuỗi trên nhiều dòng, dùng cú pháp sau (các dòng nằm giữa cặp ... hoặc ***);
+    String s1 = '''
+    Các dòng
+    chữ trong chuỗi s1
+    ''';
+    print(s1);
+    //Hoặc
+    String s2 = """
+    Các dòng
+    chữ trong chuỗi s2
+    """;
+    print(s2);
+- Có thể chèn một biến hoặc một biểu thức vào chuỗi bằng cách ký hiệu $tên_biến, ${biểu thức giá trị}
+  var a = 10;
+  var b = 20;
+
+  String kq = "Hai số $a, $b có tổng ${a + b}";
+  print(kq); //Hai số 10, 20 có tổng 30
+- bool	Biểu diễn logic đúng / sai với hai giá trị true và false.
+  bool found = true;
+  
+  if (found) {
+      //Do something
+  }
+- Mảng	Còn gọi là danh sách list, nó lưu tập hợp các dữ liệu, nó giống khái niệm này của JavaScript. Khởi tạo một mảng dùng ký hiệu [], giá trị các phần tử liệt kê cách nhau bởi ,. Các phần tử mảng có chỉ số từ 0, để truy câp đến phần tử nào dùng ký hiệu [chỉ_sổ]
+  var dow = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'];
+  print(dow.length);          //Số phần tử trong mảng
+  print(dow[0]);              //Lấy phần từ đầu tiên, chỉ số 0
+  dow[6] = 'Chủ nhật';        //Gán giá trị mới cho phần tử chỉ số 6
+  print(dow[6]);
+      //Kết quả
+      7
+      T2
+      Chủ nhật
+- Map	Cũng lưu tập hợp các giá trị (còn gọi là mảng kết hợp), thay vì sử dụng chỉ số từ 0 để tham chiếu đến phần tử, chỉ số của Map tự do đánh. Tức là mỗi phần tử trong Map lưu theo cặp key:value, dùng ký hiệu {} để khởi tạo Map hoặc khởi tạo bằng Map(); Truy cập đến phần tử Map dùng ký hiệu chấm .key
+   var dow = {
+       'T2' : 'Thứ 2',
+       'T3' : 'Thứ 3',
+       'CN' : 'Chủ Nhật'
+   };
+
+   print(dow.length);                     //Số phần tử
+   print(dow['T2']);                      //Truy cập phần tử chỉ số T2
+   dow.putIfAbsent('T4', () => 'Thứ 4');  //Thêm phần tử mới nếu chưa có
+   
+   //Cũng có thể tạo ra Map bằng
+   //var dow = new Map();
