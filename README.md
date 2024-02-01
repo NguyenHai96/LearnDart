@@ -835,3 +835,8 @@ Khi bạn có một chuỗi tác vụ trên đối tượng (gọi phương th�
   ..showTotal();
  
 Nếu bạn lớp của bạn sinh ra các đối tượng không thay đổi, hãy thêm từ khóa const vào trước hàm tạo.
+
+## Tìm hiểu các cấu trúc dữ liệu trong Dart
+
+Các cấu trúc dữ liệu từ đơn giản đến phức tạp trong Dart như enum, list, map, set, hashmap, hashset
+
