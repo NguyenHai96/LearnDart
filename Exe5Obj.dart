@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 /*Để quản lý khách hàng đến thuê phòng của một khách sạn, người ta cần các thông tin sau:
 Số ngày thuê, loại phòng, thông tin cá nhân của những người thuê phòng.
 Biết rằng phòng loại A có giá 500$, phòng loại B có giá 300$ và loại C có giá 100$.
@@ -62,9 +64,13 @@ class Room {
     this.retalDay = int.parse(stdin.readLineSync() ?? '0');
   }
 
-  int? getUserID() {
-    var user = User.init();
-    return user.id;
+  int? getUserID(int n) {
+    for (int i = 0; i < data.length; i++) {
+      if (data[i].id == n) {
+        return data[i].id;
+      }
+    }
+    return null;
   }
 
   void output() {
@@ -120,8 +126,11 @@ class Hotel {
   }
 
   void deleteUser(int n) {
-    var user = data.firstWhere((element) => element.getUserID() == n);
-    data.remove(user);
+    var user = data.firstWhere((element) => element.getUserID(n) == n);
+    if (user != null) {
+      data.remove(user);
+    }
+    print("Doi tuong da bi xoa!");
   }
 
   void priceRoom() {

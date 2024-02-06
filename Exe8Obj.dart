@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 /*Thư viện trung tâm đại học quốc gia có nhu cầu quản lý việc mượn, trả sách.
 Sinh viên đăng ký tham gia mượn sách thông qua thẻ mà thư viện cung cấp.
 Với mỗi thẻ sẽ lưu các thông tin sau: Mã phiếu mượn, ngày mượn, hạn trả, số hiệu sách,
@@ -14,7 +16,7 @@ class Student {
   int? old;
   String? Class;
 
-  Student({this.name, this.old, this.Class});
+  Student.init() {}
 
   void import() {
     print("Nhap ten hs: ");
@@ -32,20 +34,17 @@ class Student {
   }
 }
 
-class Card extends Student {
+class Card {
   int? idCard;
   int? borrowingDay;
   int? returnDay;
   int? idBook;
+  var student = Student.init();
 
-  Card(String? name, int? old, String? Class, this.idCard, this.borrowingDay,
-      this.returnDay, this.idBook)
-      : super(name: name, old: old, Class: Class);
   Card.init() {}
 
-  @override
   void import() {
-    super.import();
+    student.import();
     print("Nhap ma phieu muon: ");
     this.idCard = int.parse(stdin.readLineSync() ?? '0');
     print("Nhap ngay muon: ");
@@ -56,9 +55,8 @@ class Card extends Student {
     this.idBook = int.parse(stdin.readLineSync() ?? '0');
   }
 
-  @override
   void output() {
-    super.output();
+    student.output();
     print('Ma phieu: ${this.idCard}');
     print('Ngay muon: ${this.borrowingDay}');
     print('Ngay tra: ${this.returnDay}');
@@ -77,7 +75,9 @@ class ManageLibrary {
 
   void delete(int n) {
     var card = list.firstWhere((element) => element.idCard == n);
-    list.remove(card);
+    if (card != null) {
+      list.remove(card);
+    }
     print("The da bi xoa!");
   }
 

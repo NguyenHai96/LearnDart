@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 /*Khoa CNTT – DHKHTN cần quản lý việc thanh toán tiền lương cho các cán bộ giáo viên trong khoa.
 Để quản lý được, khoa cần các thông tin sau:
 Với mỗi cán bộ giáo viên có các thông tin sau:
@@ -78,7 +80,9 @@ class ManageTeacher {
 
   void delete(int n) {
     var teacher = data.firstWhere((element) => element.id == n);
-    data.remove(teacher);
+    if (teacher != null) {
+      data.remove(teacher);
+    }
     print("Thong tin giao vien da bi xoa!");
   }
 

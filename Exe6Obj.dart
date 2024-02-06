@@ -16,7 +16,7 @@ class Student {
   String? homeTown;
   String? Class;
 
-  Student.name() {}
+  Student.init() {}
 
   void importStudent() {
     print("Nhap ten cua hoc sinh: ");
@@ -41,7 +41,7 @@ class School {
   List<Student> data = [];
 
   void inputStudent() {
-    var student = Student.name();
+    var student = Student.init();
     student.importStudent();
     data.add(student);
   }
