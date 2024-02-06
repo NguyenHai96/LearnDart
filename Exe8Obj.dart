@@ -14,7 +14,7 @@ import 'dart:io';
 class Student {
   String? name;
   int? old;
-  String? Class;
+  String? grade;
 
   Student.init() {}
 
@@ -24,13 +24,13 @@ class Student {
     print("Nhap tuoi hs: ");
     this.old = int.parse(stdin.readLineSync() ?? '0');
     print("Nhap lop hs: ");
-    this.Class = stdin.readLineSync();
+    this.grade = stdin.readLineSync();
   }
 
   void output() {
     print('Ten hs: ${this.name}');
     print('Tuoi hs: ${this.old}');
-    print('Lop hs: ${this.Class}');
+    print('Lop hs: ${this.grade}');
   }
 }
 
