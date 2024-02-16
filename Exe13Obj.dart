@@ -245,7 +245,7 @@ class EmployeeManage {
     ;
   }
 
-  void sreach() {
+  void adjust() {
     int n;
     print("Nhap vao id nhan vien can sua thong tin");
     n = int.parse(stdin.readLineSync() ?? '0');
@@ -270,7 +270,7 @@ class EmployeeManage {
   void output() {
     int n;
     print(
-        "Nhap lua chon kieu nhan vien can them(0: Experience, 1:Fresher , 2:Intern):");
+        "Nhap lua chon kieu nhan vien can tim(0: Experience, 1:Fresher , 2:Intern):");
     n = int.parse(stdin.readLineSync() ?? '0');
     EmployeeType type = asEnumValue(EmployeeType.values, n);
     switch (type) {
@@ -298,6 +298,16 @@ class EmployeeManage {
     }
     ;
   }
+
+  void searchEmployee() {
+    String name;
+    print("Nhap vao ten nhan vien can tim: ");
+    name = stdin.readLineSync() ?? '0';
+    var employee = data.firstWhere((element) => element.name == name);
+    if (employee != null) {
+      employee.output();
+    }
+  }
 }
 
 main() {
@@ -310,7 +320,8 @@ main() {
   2. Tim thong tin nhan vien va sua thong tin theo id.
   3. Xoa thong tin nhan vien theo id.
   4. Tim va In thong tin nhan vien theo yeu cau.
-  5. Thoat khoi chuong trinh.
+  5. Tim thong tin nhan vien theo ten nhan vien.
+  6. Thoat khoi chuong trinh.
 ''';
     print(x);
     print('Nhap lua chon cua ban: ');
@@ -320,7 +331,7 @@ main() {
         manage.import();
         break;
       case 2:
-        manage.sreach();
+        manage.adjust();
         break;
       case 3:
         manage.delete();
@@ -328,8 +339,10 @@ main() {
       case 4:
         manage.output();
         break;
+      case 5:
+        manage.searchEmployee();
     }
     ;
-  } while (choose < 5);
+  } while (choose < 6);
   print("Thoat khoi chuong trinh!");
 }

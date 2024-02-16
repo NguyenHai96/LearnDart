@@ -81,10 +81,9 @@ class Client {
 }
 
 class Bill {
-  int? price;
   List<Client> data = [];
 
-  Bill.init() {}
+  Bill() {}
 
   void import() {
     var client = Client.init();
@@ -125,7 +124,7 @@ class Bill {
 }
 
 main() {
-  var bill = Bill.init();
+  var bill = Bill();
   int choose;
   do {
     var x = '''

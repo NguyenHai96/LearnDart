@@ -8,16 +8,18 @@ Yêu cầu 4: Chuẩn hoá văn bản theo tiêu chuẩn sau: Ở đầu và cu�
 import 'dart:io';
 
 class Document {
-  String? randomString;
+  String? letters;
 
-  Document(this.randomString);
+  Document(this.letters);
   Document.init() {}
 
   void countChar() {
     int count = 0;
-    for (int i = 0; i < this.randomString!.length; i++) {
-      if (this.randomString![i] != ' ') {
-        count++;
+    if (this.letters != null) {
+      for (int i = 0; i < this.letters!.length; i++) {
+        if (this.letters![i] != ' ') {
+          count++;
+        }
       }
     }
     print('So chu trong chuoi la: $count');
@@ -25,17 +27,19 @@ class Document {
 
   void countCharA() {
     int count = 0;
-    for (int i = 0; i < this.randomString!.length; i++) {
-      if (this.randomString![i] == 'A' || this.randomString![i] == 'a') {
-        count++;
+    if (this.letters != null) {
+      for (int i = 0; i < this.letters!.length; i++) {
+        if (this.letters![i] == 'A' || this.letters![i] == 'a') {
+          count++;
+        }
       }
     }
     print('So chu A trong chuoi la: $count');
   }
 
-  void comPact() {
-    this.randomString?.trim();
-    print('${this.randomString}');
+  void trim() {
+    this.letters?.trim();
+    print('${this.letters}');
   }
 }
 
@@ -46,5 +50,5 @@ main() {
   var form = Document(document);
   form.countChar();
   form.countCharA();
-  form.comPact();
+  form.trim();
 }

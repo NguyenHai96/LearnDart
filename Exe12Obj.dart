@@ -164,7 +164,7 @@ class TrafficManage {
     print("Thong tin xe da bi xoa!");
   }
 
-  void sreachCar() {
+  void searchCar() {
     String? color;
     String? brand;
 
@@ -181,6 +181,19 @@ class TrafficManage {
       print('Khong tim thay thong tin xe');
     }
   }
+
+  void searchIDCar() {
+    int id;
+    print("Nhap vao id cua xe can tim: ");
+    id = int.parse(stdin.readLineSync() ?? '0');
+    var car = data.firstWhere((element) => element.id == id);
+    if (car != null) {
+      print("Thong tin xe tim duoc la: ");
+      car.output();
+    } else {
+      print("Khong tim thay thong tin xe");
+    }
+  }
 }
 
 main() {
@@ -192,7 +205,8 @@ main() {
   1. Them thong tin phuong tien
   2. Tim thong tin phuong tien theo mau sac va hang xe.
   3. Xoa thong tin phuong tien theo ma so phuong tien
-  4. Thoat khoi chuong trinh
+  4. Tim thong tin phuong tien theo id xe.
+  5. Thoat khoi chuong trinh
 ''';
     print(x);
     print('Nhap lua chon cua ban: ');
@@ -202,12 +216,14 @@ main() {
         manage.import();
         break;
       case 2:
-        manage.sreachCar();
+        manage.searchCar();
         break;
       case 3:
         manage.delete();
         break;
+      case 4:
+        manage.searchIDCar();
     }
-  } while (choose < 4);
+  } while (choose < 5);
   print("Thoat khoi chuong trinh!");
 }
