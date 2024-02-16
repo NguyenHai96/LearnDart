@@ -207,8 +207,6 @@ class Intern extends Employee {
 }
 
 class EmployeeManage {
-  static int _employee_count = 0;
-
   List<dynamic> data = [];
 
   EmployeeManage() {}
@@ -225,21 +223,18 @@ class EmployeeManage {
         experience.import();
         experience.type = type;
         data.add(experience);
-        _employee_count++;
         break;
       case EmployeeType.Fresher:
         var fresher = Fresher.init();
         fresher.import();
         fresher.type = type;
         data.add(fresher);
-        _employee_count++;
         break;
       case EmployeeType.Intern:
         var intern = Intern.init();
         intern.import();
         intern.type = type;
         data.add(intern);
-        _employee_count++;
         break;
     }
     ;
@@ -303,10 +298,11 @@ class EmployeeManage {
     String name;
     print("Nhap vao ten nhan vien can tim: ");
     name = stdin.readLineSync() ?? '0';
-    var employee = data.firstWhere((element) => element.name == name);
-    if (employee != null) {
-      employee.output();
-    }
+    data.forEach((element) {
+      if (element.name == name) {
+        element.output();
+      }
+    });
   }
 }
 
