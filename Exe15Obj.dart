@@ -108,20 +108,26 @@ class Student {
 
   bool dateOfBirthValidate() {
     List<String> listBrithday = this.birthday.split('/');
+    if (listBrithday.length != 3 ||
+        int.tryParse(listBrithday[0]).runtimeType != int ||
+        int.tryParse(listBrithday[1]).runtimeType != int ||
+        int.tryParse(listBrithday[2]).runtimeType != int) {
+      return false;
+    }
     do {
       switch (int.parse(listBrithday[1])) {
         case 1 || 3 || 5 || 7 || 8 || 10 || 12:
-          return int.parse(listBrithday[0]).runtimeType == int &&
-              int.parse(listBrithday[0]) < 32 &&
-              int.parse(listBrithday[0]) > 0;
+          return int.parse(listBrithday[0]) < 32 &&
+              int.parse(listBrithday[0]) > 0 &&
+              int.parse(listBrithday[2]) > 1000;
         case 4 || 6 || 9 || 11:
-          return int.parse(listBrithday[0]).runtimeType == int &&
-              int.parse(listBrithday[0]) < 31 &&
-              int.parse(listBrithday[0]) > 0;
+          return int.parse(listBrithday[0]) < 31 &&
+              int.parse(listBrithday[0]) > 0 &&
+              int.parse(listBrithday[2]) > 1000;
         case 2:
-          return int.parse(listBrithday[0]).runtimeType == int &&
-              int.parse(listBrithday[0]) < 30 &&
-              int.parse(listBrithday[0]) > 0;
+          return int.parse(listBrithday[0]) < 30 &&
+              int.parse(listBrithday[0]) > 0 &&
+              int.parse(listBrithday[2]) > 1000;
         default:
           return false;
       }
