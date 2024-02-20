@@ -1,3 +1,5 @@
+// ignore_for_file: dead_code
+
 /*Xây dựng chương trình quản lý kết quả học tập của sinh viên tại một trường đại học.
 Có 2 loại sinh viên là sinh viên chính quy và sinh viên tại chức với các thông tin giống nhau:
 mã sinh viên, họ tên, ngày tháng năm sinh, năm vào học, điểm đầu vào và danh sách kết quả học tập.
@@ -43,11 +45,11 @@ class InvalidDOBException implements IOException {
   InvalidDOBException({required this.mess});
 }
 
-class LearnOutcomes {
+class LearnResult {
   String? semesterName;
   double? mediumScore;
 
-  LearnOutcomes.init() {}
+  LearnResult.init() {}
 
   void import() {
     print("Nhap Ten hoc ky: ");
@@ -73,27 +75,13 @@ class Student {
   int? yearOfAdmission;
   int? entryTestScore;
   StudentType? type;
-  List<LearnOutcomes> list = [];
+  List<LearnResult> list = [];
 
   void import() {
     print("Nhap Ma SV: ");
     this.id = int.parse(stdin.readLineSync() ?? '0');
     print("Nhap Ten SV: ");
     this.name = stdin.readLineSync();
-
-    bool dateOfBirthValidate() {
-      List<String> listBrithday = this.birthday.split('/');
-      return listBrithday.length == 3 &&
-          int.parse(listBrithday[0]).runtimeType == int &&
-          int.parse(listBrithday[0]) > 0 &&
-          int.parse(listBrithday[0]) < 32 &&
-          int.parse(listBrithday[1]).runtimeType == int &&
-          int.parse(listBrithday[1]) > 0 &&
-          int.parse(listBrithday[1]) < 13 &&
-          int.parse(listBrithday[2]).runtimeType == int &&
-          int.parse(listBrithday[2]) > 1000;
-    }
-
     do {
       try {
         print("Nhap Ngay Sinh SV: ");
@@ -105,7 +93,6 @@ class Student {
         print('Lỗi nhập ngày tháng năm sinh $err');
       }
     } while (!dateOfBirthValidate());
-
     print("Nhap nam nhap hoc: ");
     this.yearOfAdmission = int.parse(stdin.readLineSync() ?? '0');
     print("Nhap diem Test dau vao: ");
@@ -113,10 +100,33 @@ class Student {
     print("Nhap vao so hoc ky Sv da hoc: ");
     int n = int.parse(stdin.readLineSync() ?? '0');
     for (int i = 0; i < n; i++) {
-      var result = LearnOutcomes.init();
+      var result = LearnResult.init();
       result.import();
       list.add(result);
     }
+  }
+
+  bool dateOfBirthValidate() {
+    List<String> listBrithday = this.birthday.split('/');
+    do {
+      switch (int.parse(listBrithday[1])) {
+        case 1 || 3 || 5 || 7 || 8 || 10 || 12:
+          return int.parse(listBrithday[0]).runtimeType == int &&
+              int.parse(listBrithday[0]) < 32 &&
+              int.parse(listBrithday[0]) > 0;
+        case 4 || 6 || 9 || 11:
+          return int.parse(listBrithday[0]).runtimeType == int &&
+              int.parse(listBrithday[0]) < 31 &&
+              int.parse(listBrithday[0]) > 0;
+        case 2:
+          return int.parse(listBrithday[0]).runtimeType == int &&
+              int.parse(listBrithday[0]) < 30 &&
+              int.parse(listBrithday[0]) > 0;
+        default:
+          return false;
+      }
+      ;
+    } while (int.parse(listBrithday[1]) < 0 || int.parse(listBrithday[1]) > 12);
   }
 
   void output() {
@@ -135,13 +145,8 @@ class Student {
   }
 
   double maxMediumScore() {
-    double max = 0;
-    list.forEach((element) {
-      if (element.getScore() > max) {
-        max = element.getScore();
-      }
-    });
-    return max;
+    list.sort((a, b) => b.getScore().compareTo(a.getScore()));
+    return list[0].getScore();
   }
 
   int getYear() {
@@ -150,7 +155,7 @@ class Student {
 }
 
 class InServiceStudent extends Student {
-  String? _TrainJoinPlace;
+  String? _trainJoinPlace;
 
   InServiceStudent.init() {}
 
@@ -158,18 +163,18 @@ class InServiceStudent extends Student {
   void import() {
     super.import();
     print("Nhap noi lien ket dao tao: ");
-    this._TrainJoinPlace = stdin.readLineSync();
+    this._trainJoinPlace = stdin.readLineSync();
   }
 
   @override
   void output() {
     print("---Sinh vien he tai chuc---");
     super.output();
-    print('Noi lien ket dao tao: ${this._TrainJoinPlace}');
+    print('Noi lien ket dao tao: ${this._trainJoinPlace}');
   }
 
   String getPlace() {
-    return this._TrainJoinPlace ?? '';
+    return this._trainJoinPlace ?? '';
   }
 }
 
@@ -218,56 +223,36 @@ class Department {
   void printRegularStudent() {
     print("Cac sinh vien thuoc he chinh quy la: ");
     studentData.forEach((element) {
-      if (element != null && element.type == StudentType.Regular) {
+      if (element.type == StudentType.Regular) {
         element.output();
       }
     });
   }
 
   void countRegularStudent() {
-    int count = 0;
-    studentData.forEach((element) {
-      if (element != null && element.type == StudentType.Regular) {
-        count++;
-      }
-    });
+    var regularStudents =
+        studentData.where((element) => element.type == StudentType.Regular);
+    var count = regularStudents.length;
     print('So luong sinh vien thuoc he chinh quy la: $count');
   }
 
   void maxTestScore() {
-    int max = 0;
-    for (var element in studentData) {
-      if (element.getTestScore() > max) {
-        max = element.getTestScore();
-      }
-    }
-    studentData.forEach((element) {
-      if (element.getTestScore() == max) {
-        element.output();
-      }
-    });
+    studentData.sort((a, b) => b.getTestScore().compareTo(a.getTestScore()));
+    studentData[0].output();
   }
 
   void maxMediumScore() {
-    double max = 0;
-    for (var element in studentData) {
-      if (element.maxMediumScore() > max) {
-        max = element.maxMediumScore();
-      }
-    }
-    studentData.forEach((element) {
-      if (element.maxMediumScore() == max) {
-        element.output();
-      }
-    });
+    studentData
+        .sort((a, b) => b.maxMediumScore().compareTo(a.maxMediumScore()));
+    studentData[0].output();
   }
 
   void searchStudent() {
     print("Nhap vao dia chi hoc tai chuc cua sinh vien: ");
-    String TrainJoinPlace = stdin.readLineSync() ?? '';
+    String trainJoinPlace = stdin.readLineSync() ?? '';
     for (int i = 0; i < studentData.length; i++) {
       if (studentData[i].type == StudentType.InService &&
-          studentData[i].getPlace() == TrainJoinPlace) {
+          studentData[i].getPlace() == trainJoinPlace) {
         studentData[i].output();
       }
     }
@@ -284,11 +269,11 @@ class Department {
   void printStudent() {
     print("Nhap vao nam nhap hoc cua sinh vien: ");
     int year = int.parse(stdin.readLineSync() ?? '');
-    for (int i = 0; i < studentData.length; i++) {
-      if (studentData[i].yearOfAdmission == year) {
-        studentData[i].output();
+    studentData.forEach((element) {
+      if (element.yearOfAdmission == year) {
+        element.output();
       }
-    }
+    });
   }
 }
 

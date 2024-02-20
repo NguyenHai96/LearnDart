@@ -1,4 +1,4 @@
-// ignore_for_file: unused_field
+// ignore_for_file: unused_field, dead_code
 
 /*Viết chương trình quản lý việc tuyển sinh viên sau khi tốt nghiệp đại học.
 
@@ -118,15 +118,25 @@ class Student {
 
   bool dateOfBirthValidate() {
     List<String> listBrithday = this.birthday.split('/');
-    return listBrithday.length == 3 &&
-        int.parse(listBrithday[0]).runtimeType == int &&
-        int.parse(listBrithday[0]) > 0 &&
-        int.parse(listBrithday[0]) < 32 &&
-        int.parse(listBrithday[1]).runtimeType == int &&
-        int.parse(listBrithday[1]) > 0 &&
-        int.parse(listBrithday[1]) < 13 &&
-        int.parse(listBrithday[2]).runtimeType == int &&
-        int.parse(listBrithday[2]) > 1000;
+    do {
+      switch (int.parse(listBrithday[1])) {
+        case 1 || 3 || 5 || 7 || 8 || 10 || 12:
+          return int.parse(listBrithday[0]).runtimeType == int &&
+              int.parse(listBrithday[0]) < 32 &&
+              int.parse(listBrithday[0]) > 0;
+        case 4 || 6 || 9 || 11:
+          return int.parse(listBrithday[0]).runtimeType == int &&
+              int.parse(listBrithday[0]) < 31 &&
+              int.parse(listBrithday[0]) > 0;
+        case 2:
+          return int.parse(listBrithday[0]).runtimeType == int &&
+              int.parse(listBrithday[0]) < 30 &&
+              int.parse(listBrithday[0]) > 0;
+        default:
+          return false;
+      }
+      ;
+    } while (int.parse(listBrithday[1]) < 0 || int.parse(listBrithday[1]) > 12);
   }
 
   bool phoneValidate() {
@@ -203,11 +213,11 @@ class NormalStudent extends Student {
   }
 }
 
-class EmployeesSelective {
+class EmployeeSelective {
   List<GoodStudent> listStudentGood = [];
   List<NormalStudent> listStudentNormal = [];
 
-  Selective() {}
+  EmployeeSelective() {}
 
   void import() {
     int n;
@@ -264,7 +274,7 @@ class EmployeesSelective {
 }
 
 main() {
-  var employee = EmployeesSelective();
+  var employee = EmployeeSelective();
   int choose;
   do {
     var x = '''
