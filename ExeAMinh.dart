@@ -17,27 +17,13 @@ class RandomNumber {
     var element = list[random.nextInt(list.length)];
     print('------------');
     print('So duoc chon la: $element');
-    bool condition =
-        listcopy.where((number) => number == element).toList().isEmpty;
-    if (condition) {
-      listcopy.add(element);
-    }
-    if (list.length > 0) {
-      list.remove(element);
-      print('Cac so con lai la: ${list.toString()}');
-    }
+    listcopy.add(element);
+    list.remove(element);
+    print('Cac so con lai la: ${list.toString()}');
     if (list.length == 0) {
       print("Cac so can random da het. Xin moi nhap lai!");
-    }
-  }
-
-  void assignNumber() {
-    for (int i = 0; i < listcopy.length; i++) {
-      bool condition =
-          list.where((number) => number == listcopy[i]).toList().isEmpty;
-      if (condition) {
-        list.add(listcopy[i]);
-      }
+      list.addAll(listcopy);
+      listcopy.clear();
     }
   }
 }
@@ -50,7 +36,7 @@ main() {
   -----Vong quay-----
   1. Them phan tu.
   2. Random ra phan tu.
-  3. Them lai tat ca phan tu da random.
+  3. Thoat khoi vong quay.
   ''';
     print(x);
     print("Nhap lua chon cua ban:");
@@ -62,8 +48,6 @@ main() {
       case 2:
         random.randomChoose();
         break;
-      case 3:
-        random.assignNumber();
     }
-  } while (choose < 4);
+  } while (choose < 3);
 }
